@@ -1,0 +1,11 @@
+id;name;description
+1;Paypal;Paypal
+2;Lastschrift;Lastschrift
+3;Kreditkarte;Kreditkarte
+4;Ratenzahlung;Ratenzahlung
+5;Geschenkgutschein;Geschenkgutschein
+6;Barclays;Barclays
+7;Ideal;Ideal
+8;Bancontact;Bancontact
+9;Visa;Visa
+10;Americanexpress;Americanexpress

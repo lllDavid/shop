@@ -1,0 +1,27 @@
+{
+  "shopApp": {
+    "shippingInformation": {
+      "home": {
+        "title": "Shipping Informations",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Shipping Information",
+        "createOrEditLabel": "Create or edit a Shipping Information",
+        "notFound": "No Shipping Informations found"
+      },
+      "created": "A new Shipping Information is created with identifier {{ param }}",
+      "updated": "A Shipping Information is updated with identifier {{ param }}",
+      "deleted": "A Shipping Information is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Shipping Information {{ id }}?"
+      },
+      "detail": {
+        "title": "Shipping Information"
+      },
+      "id": "ID",
+      "deliveryAddress": "Delivery Address",
+      "shippingStatus": "Shipping Status",
+      "customer": "Customer",
+      "order": "Order"
+    }
+  }
+}

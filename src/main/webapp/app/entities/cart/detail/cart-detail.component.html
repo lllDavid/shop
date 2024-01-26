@@ -1,0 +1,54 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (cart) {
+      <div>
+        <h2 data-cy="cartDetailsHeading"><span jhiTranslate="shopApp.cart.detail.title">Cart</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ cart.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="shopApp.cart.totalPrice">Total Price</span></dt>
+          <dd>
+            <span>{{ cart.totalPrice | currency:'EUR' }}</span> <!-- Added currency-->
+          </dd>
+          <dt><span jhiTranslate="shopApp.cart.productAmount">Product Amount</span></dt>
+          <dd>
+            <span>{{ cart.productAmount }}</span>
+          </dd>
+          <dt><span jhiTranslate="shopApp.cart.customer">Customer</span></dt>
+          <dd>
+            @if (cart.customer) {
+              <div>
+                <a [routerLink]="['/customer', cart.customer.id, 'view']">{{ cart.customer.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="shopApp.cart.product">Product</span></dt>
+          <dd>
+            @if (cart.product) {
+              <div> 
+                <a [routerLink]="['/product', cart.product.id, 'view']">{{ cart.product.name }}</a> <!-- Changed id to name-->
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/cart', cart.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

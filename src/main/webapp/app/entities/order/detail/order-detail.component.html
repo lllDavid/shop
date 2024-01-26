@@ -1,0 +1,71 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (order) {
+      <div>
+        <h2 data-cy="orderDetailsHeading"><span jhiTranslate="shopApp.order.detail.title">Order</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ order.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="shopApp.order.date">Date</span></dt>
+          <dd>
+            <span>{{ order.date | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="shopApp.order.totalPrice">Total Price</span></dt>
+          <dd>
+            <span>{{ order.totalPrice }}</span>
+          </dd>
+          <dt><span jhiTranslate="shopApp.order.shippingInformation">Shipping Information</span></dt>
+          <dd>
+            @if (order.shippingInformation) {
+              <div>
+                <a [routerLink]="['/shipping-information', order.shippingInformation.id, 'view']">{{ order.shippingInformation.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="shopApp.order.paymentMethod">Payment Method</span></dt>
+          <dd>
+            @if (order.paymentMethod) {
+              <div>
+                <a [routerLink]="['/payment-method', order.paymentMethod.id, 'view']">{{ order.paymentMethod.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="shopApp.order.products">Products</span></dt>
+          <dd>
+            @for (products of order.products; track $index; let last = $last) {
+              <span>
+                <a [routerLink]="['/product', products.id, 'view']">{{ products.id }}</a
+                >{{ last ? '' : ', ' }}
+              </span>
+            }
+          </dd>
+          <dt><span jhiTranslate="shopApp.order.customer">Customer</span></dt>
+          <dd>
+            @if (order.customer) {
+              <div>
+                <a [routerLink]="['/customer', order.customer.id, 'view']">{{ order.customer.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/order', order.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,59 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (customer) {
+      <div>
+        <h2 data-cy="customerDetailsHeading"><span jhiTranslate="shopApp.customer.detail.title">Customer</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ customer.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="shopApp.customer.lastName">Last Name</span></dt>
+          <dd>
+            <span>{{ customer.lastName }}</span>
+          </dd>
+          <dt><span jhiTranslate="shopApp.customer.firstName">First Name</span></dt>
+          <dd>
+            <span>{{ customer.firstName }}</span>
+          </dd>
+          <dt><span jhiTranslate="shopApp.customer.address">Address</span></dt>
+          <dd>
+            <span>{{ customer.address }}</span>
+          </dd>
+          <dt><span jhiTranslate="shopApp.customer.email">Email</span></dt>
+          <dd>
+            <span>{{ customer.email }}</span>
+          </dd>
+          <dt><span jhiTranslate="shopApp.customer.password">Password</span></dt>
+          <dd>
+            <span>{{ customer.password }}</span>
+          </dd>
+          <dt><span jhiTranslate="shopApp.customer.favoriteProducts">Favorite Products</span></dt>
+          <dd>
+            @for (favoriteProducts of customer.favoriteProducts; track $index; let last = $last) {
+              <span>
+                <a [routerLink]="['/product', favoriteProducts.id, 'view']">{{ favoriteProducts.id }}</a
+                >{{ last ? '' : ', ' }}
+              </span>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/customer', customer.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

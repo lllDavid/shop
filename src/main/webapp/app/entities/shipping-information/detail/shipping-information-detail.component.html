@@ -1,0 +1,48 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (shippingInformation) {
+      <div>
+        <h2 data-cy="shippingInformationDetailsHeading">
+          <span jhiTranslate="shopApp.shippingInformation.detail.title">Shipping Information</span>
+        </h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ shippingInformation.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="shopApp.shippingInformation.deliveryAddress">Delivery Address</span></dt>
+          <dd>
+            <span>{{ shippingInformation.deliveryAddress }}</span>
+          </dd>
+          <dt><span jhiTranslate="shopApp.shippingInformation.shippingStatus">Shipping Status</span></dt>
+          <dd>
+            <span>{{ shippingInformation.shippingStatus }}</span>
+          </dd>
+          <dt><span jhiTranslate="shopApp.shippingInformation.customer">Customer</span></dt>
+          <dd>
+            @if (shippingInformation.customer) {
+              <div>
+                <a [routerLink]="['/customer', shippingInformation.customer.id, 'view']">{{ shippingInformation.customer.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/shipping-information', shippingInformation.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

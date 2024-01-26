@@ -1,0 +1,30 @@
+{
+  "annotations": {
+    "changelogDate": "20191222075252"
+  },
+  "applications": ["shop"],
+  "entityTableName": "payment_method",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "PaymentMethod",
+  "relationships": [
+    {
+      "otherEntityName": "order",
+      "otherEntityRelationshipName": "paymentMethod",
+      "relationshipName": "orders",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

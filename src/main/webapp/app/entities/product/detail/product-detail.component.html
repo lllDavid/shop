@@ -1,0 +1,69 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (product) {
+      <div>
+        <h2 data-cy="productDetailsHeading"><span jhiTranslate="shopApp.product.detail.title">Product</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ product.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="shopApp.product.name">Name</span></dt>
+          <dd>
+            <span>{{ product.name }}</span>
+          </dd>
+          <dt><span jhiTranslate="shopApp.product.description">Description</span></dt>
+          <dd>
+            <span>{{ product.description }}</span>
+          </dd>
+          <dt><span jhiTranslate="shopApp.product.price">Price</span></dt>
+          <dd>
+            <span>{{ product.price | currency:'EUR' }}</span> <!-- Added Currency-->
+          </dd>
+          <dt><span jhiTranslate="shopApp.product.inStock">In Stock</span></dt>
+          <dd>
+            <span>{{ product.inStock }}</span>
+          </dd>
+          <dt><span jhiTranslate="shopApp.product.image">Image</span></dt>
+          <dd>
+            @if (product.image) {
+              <div>
+                <a (click)="openFile(product.image, product.imageContentType)">
+                  <img
+                    [src]="'data:' + product.imageContentType + ';base64,' + product.image"
+                    style="max-width: 100%"
+                    alt="product image"
+                  />
+                </a>
+               <!-- {{ product.imageContentType }}, {{ byteSize(product.image) }} --> <!-- Removes text from images-->
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="shopApp.product.category">Category</span></dt>
+          <dd>
+            @if (product.category) {
+              <div>
+                <a [routerLink]="['/category', product.category.id, 'view']">{{ product.category.name }}</a> <!-- Change id to name-->
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/product', product.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

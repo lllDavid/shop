@@ -1,0 +1,11 @@
+id;name;description;price;in_stock;image;image_content_type
+1;Red Bull Zero;Red Bull Zero Sugar;1.90;423;../fake-data/blob/redbullzero.png;image/png
+2;Red Bull;Red Bull Regular;1.90;673;../fake-data/blob/redbull.png;image/png
+3;Coca-Cola Zero;Coca-Cola Zero Sugar;1.30;598;../fake-data/blob/colazero.png;image/png
+4;Coca-Cola;Coca Cola Regular;1.30;635;../fake-data/blob/cola.png;image/png
+5;Coca-Cola Cherry;Coca-Cola Cherry;1.30;673;../fake-data/blob/colacherry.png;image/png
+6;Augustiner Hell;Lagerbier Hell;1.20;923;../fake-data/blob/augustinerhell.jpg;image/jpg
+7;Augustiner Edelstoff;Lagerbier Export;1.25;143;../fake-data/blob/augustineredelstoff.png;image/png
+8;Adelholzener Wasser Medium;Wasser;1.10;802;../fake-data/blob/adelholzenermedium.png;image/png
+9;Adelholzener Wasser Classic;Wasser;1.10;137;../fake-data/blob/adelholzenerclassic.png;image/png
+10;Adelholzener Apfelschorle;Fruchtschorle;1.15;297;../fake-data/blob/adelholzenerapfelschorle.jpg;image/jpg

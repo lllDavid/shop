@@ -1,0 +1,51 @@
+{
+  "annotations": {
+    "changelogDate": "20191222075052"
+  },
+  "applications": ["shop"],
+  "entityTableName": "jhi_order",
+  "fields": [
+    {
+      "fieldName": "date",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "totalPrice",
+      "fieldType": "BigDecimal"
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "Order",
+  "relationships": [
+    {
+      "otherEntityName": "shippingInformation",
+      "otherEntityRelationshipName": "order",
+      "relationshipName": "shippingInformation",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "paymentMethod",
+      "otherEntityRelationshipName": "orders",
+      "relationshipName": "paymentMethod",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "product",
+      "otherEntityRelationshipName": "orders",
+      "relationshipName": "products",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-many"
+    },
+    {
+      "otherEntityName": "customer",
+      "otherEntityRelationshipName": "orders",
+      "relationshipName": "customer",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

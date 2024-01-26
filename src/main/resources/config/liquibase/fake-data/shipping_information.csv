@@ -1,0 +1,11 @@
+id;delivery_address;shipping_status
+1;Bucherstraße 8 86221 Hamburg;sent
+2;Meierstraße 3b 62782 Frankfurt;sent
+3;Mustermannweg 6c 92872 Berlin;pending
+4;Alleweg 33d 21134 Dortmund;sent
+5;Nordweg 1c 52461 Düsseldorf; sent
+6;Südstraße 125f 21214 Gelsenkirchen;sent
+7;Zum Baum 2a 43241 München; sent
+8;Zur Sonne Alee 2 86482 Rosenheim;pending
+9;Ingelsberg 3f 52415 Bielefeld;pending
+10;Veilchenweg 21b 82648 Traunstein;sent

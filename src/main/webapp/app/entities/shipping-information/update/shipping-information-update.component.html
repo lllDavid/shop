@@ -1,0 +1,85 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-shipping-information-heading"
+        data-cy="ShippingInformationCreateUpdateHeading"
+        jhiTranslate="shopApp.shippingInformation.home.createOrEditLabel"
+      >
+        Create or edit a Shipping Information
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="shopApp.shippingInformation.deliveryAddress" for="field_deliveryAddress"
+            >Delivery Address</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="deliveryAddress"
+            id="field_deliveryAddress"
+            data-cy="deliveryAddress"
+            formControlName="deliveryAddress"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="shopApp.shippingInformation.shippingStatus" for="field_shippingStatus"
+            >Shipping Status</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="shippingStatus"
+            id="field_shippingStatus"
+            data-cy="shippingStatus"
+            formControlName="shippingStatus"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="shopApp.shippingInformation.customer" for="field_customer">Customer</label>
+          <select
+            class="form-control"
+            id="field_customer"
+            data-cy="customer"
+            name="customer"
+            formControlName="customer"
+            [compareWith]="compareCustomer"
+          >
+            <option [ngValue]="null"></option>
+            @for (customerOption of customersSharedCollection; track $index) {
+              <option [ngValue]="customerOption">{{ customerOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
