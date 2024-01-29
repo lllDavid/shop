@@ -63,7 +63,7 @@ export class ProductComponent implements OnInit {
   searchProducts(): void {
     this.productService.findByName(this.userInput).subscribe({
       next: response => {
-        console.log('Response: ', response.body);
+        console.log('Search Response: ', response.body);
         this.products = response.body ? response.body : undefined;
       }
     })
@@ -71,11 +71,16 @@ export class ProductComponent implements OnInit {
 
   // addToCart()
   addToCart(product: IProduct): void {
-    console.log('Added to cart: ', product);
     this.cartService.addToCart(product);
-    console.log(this.cartService.carts)
   }
-
+  //clearCartAmountInputFieldPlaceholderText()
+  clearCartAmountInputFieldPlaceholderText(): void {
+    const cartAmountInputField = document.getElementById('cartAmountInputField');
+    console.log("Hell")
+    if (cartAmountInputField) {
+      cartAmountInputField.innerText = "";  // No optional chaining needed here
+    }
+  }
   byteSize(base64String: string): string {
     return this.dataUtils.byteSize(base64String);
   }

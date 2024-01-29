@@ -2,7 +2,7 @@
   "shopApp": {
     "product": {
       "home": {
-        "title": "Products",
+        "title": "Produkte", 
         "refreshListLabel": "Refresh list",
         "createLabel": "Create a new Product",
         "createOrEditLabel": "Create or edit a Product",

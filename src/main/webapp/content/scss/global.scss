@@ -185,10 +185,18 @@ jhi-product a {
   justify-content: center;
 }
 
-#cartButton {
+#addToCartButton {
   margin-right: 10px;
   border-radius: 10px;
   font-weight: bold;
+}
+
+#cartAmountInputField {
+  width: 15%;
+  margin-right: 10px;
+  border-radius: 10px;
+  padding-left: 5px;
+
 }
 
 #searchBar {
@@ -203,6 +211,30 @@ jhi-product a {
   text-align: center;
 }
 
+
+
+
+#adContainerLeft img {
+  position: fixed;
+  left: 0;
+  top: 1;
+  height: 90vh; /* Take the full height of the viewport */
+  width: 10vw; /* Set the width as a percentage of the viewport width */
+  object-fit: cover; 
+
+  
+}
+
+#adContainerRight img {
+  position: fixed;
+  right:0;
+  top: 1;
+  height: 90vh; /* Take the full height of the viewport */
+  width: 10vw; /* Set the width as a percentage of the viewport width */
+  object-fit: cover; 
+
+  
+}
 
 
 

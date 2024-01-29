@@ -36,7 +36,7 @@ export class CartUpdateComponent implements OnInit {
     protected customerService: CustomerService,
     protected productService: ProductService,
     protected activatedRoute: ActivatedRoute,
-  ) {}
+  ) { }
 
   compareCustomer = (o1: ICustomer | null, o2: ICustomer | null): boolean => this.customerService.compareCustomer(o1, o2);
 
@@ -48,7 +48,6 @@ export class CartUpdateComponent implements OnInit {
       if (cart) {
         this.updateForm(cart);
       }
-
       this.loadRelationshipsOptions();
     });
   }

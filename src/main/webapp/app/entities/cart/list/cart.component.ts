@@ -13,6 +13,7 @@ import { ICart } from '../cart.model';
 import { EntityArrayResponseType, CartService } from '../service/cart.service';
 import { CartDeleteDialogComponent } from '../delete/cart-delete-dialog.component';
 
+
 @Component({
   standalone: true,
   selector: 'jhi-cart',
@@ -47,8 +48,7 @@ export class CartComponent implements OnInit {
   trackId = (_index: number, item: ICart): number => this.cartService.getCartIdentifier(item);
 
   ngOnInit(): void {
-    this.carts = this.cartService.carts // addToCart()
-    console.log(this.cartService.carts)
+    this.load();
   }
 
   delete(cart: ICart): void {

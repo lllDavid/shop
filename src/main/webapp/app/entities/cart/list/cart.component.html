@@ -85,7 +85,7 @@
           <td>
             @if (cart.product) {
             <div>
-              <a [routerLink]="['/product', cart.product.id, 'view']">{{ cart.product.name }}</a> <!-- Changed id to name-->
+              <p [routerLink]="['/product', cart.product.id, 'view']">{{ cart.product.name }}</p> <!-- Changed id to name-->
             </div>
             }
           </td>

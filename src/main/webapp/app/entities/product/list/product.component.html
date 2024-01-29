@@ -1,10 +1,18 @@
 <div>
+  <div id="adContainerLeft">
+    <img src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/33b6c527914975.5636cb0b80183.jpg">  <!-- added -->
+  </div> 
+
+  <div id="adContainerRight">
+    <img src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/33b6c527914975.5636cb0b80183.jpg">  <!-- added -->
+  </div>
+
   <h2 id="page-heading" data-cy="ProductHeading">
     <span jhiTranslate="shopApp.product.home.title">Products</span>
 
     <div id="searchBar">
       <input id="searchInput" type="text" [(ngModel)]="userInput" (keyup.enter)="searchProducts()"
-        placeholder="Search..."> <!-- Calls searchProducts() on Enter Key Press -->
+        placeholder="Suchen..."> <!-- Calls searchProducts() on Enter Key Press -->
     </div>
 
     <div class="d-flex justify-content-end">
@@ -30,6 +38,7 @@
     <span jhiTranslate="shopApp.product.home.notFound">No Products found</span>
   </div>
   }
+  
 
   @if (products && products.length > 0) {
   <div class="table-responsive table-entities" id="entities">
@@ -116,9 +125,9 @@
           <td class="text-end">
             <div class="btn-group">
 
-             
-              <button id="cartButton" (click)="addToCart(product)" class="btn btn-warning"><fa-icon icon="shopping-cart"></fa-icon> Add to Cart
-                <!-- Calls addToCart Method -->
+              <input id="cartAmountInputField" placeholder="Amount:" onclick="clearCartAmountInputFieldPlaceholderText()"> <!-- Added-->
+              <button id="addToCartButton" (click)="addToCart(product)" class="btn btn-warning"><fa-icon icon="shopping-cart"></fa-icon> Add to Cart
+               <!-- Calls addToCart Method -->
               </button>
 
               <a [routerLink]="['/product', product.id, 'view']" class="btn btn-info btn-sm"

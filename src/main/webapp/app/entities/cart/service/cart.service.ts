@@ -16,7 +16,7 @@ export type EntityArrayResponseType = HttpResponse<ICart[]>;
 
 @Injectable({ providedIn: 'root' })
 export class CartService {
-  carts?: ICart[] = []; // addToCart
+
 
   protected resourceUrl = this.applicationConfigService.getEndpointFor('api/carts');
 
@@ -30,26 +30,30 @@ export class CartService {
   addToCart(product: IProduct): void {
     let newCart: NewCart = {
       id: null,
-      totalPrice: 0,
+      totalPrice: product.price,
       productAmount: 0,
       customer: null,
-      product: null,
-      products: [],
+      product: product,
     };
 
-    newCart?.products?.push(product);
-
-    newCart.id = product.id;
-    newCart.totalPrice = product.price;
-    newCart.productAmount = newCart?.products?.length;
-  //newCart.customer
-    newCart.product = product
-
-    this.carts?.push(newCart);
-    this.create(newCart)
+    this.create(newCart).subscribe({
+      next: (response) => {
+        let createdCart: ICart = {
+          id: newCart.id ?? (response.body?.id ?? 0),
+          totalPrice: newCart.totalPrice,
+          productAmount: newCart.productAmount,
+          customer: newCart.customer,
+          product: newCart.product,
+        };
+      },
+    });
   }
 
 
+  // clearCart()
+  clearCart() {
+
+  }
 
   create(cart: NewCart): Observable<EntityResponseType> {
     return this.http.post<ICart>(this.resourceUrl, cart, { observe: 'response' });
