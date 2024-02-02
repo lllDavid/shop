@@ -119,8 +119,14 @@
           </td>
           <td class="text-end">
             <div class="btn-group">
-              <input class="addToCartAmountInputField" id="{{ 'addToCartAmount_' + product.id }}" placeholder="Amount:">
-              <!-- Cart Amount Input Field-->
+              <select id="cartAmountDropdown_{{ product.id }}" class="form-select" aria-label="Default select example">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="4">Custom</option>
+              </select>
               <button id="addToCartButton" (click)="addToCart(product)" class="btn btn-warning"><fa-icon
                   icon="shopping-cart"></fa-icon> Add
                 <!-- addToCart() -->
