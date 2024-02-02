@@ -6,13 +6,7 @@
 Bootstrap tweaks
 ===============================================================*/
 
-body,
-h1,
-h2,
-h3,
-h4 {
-  font-weight: 300;
-}
+
 
 /* Increase contrast of links to get 100% on Lighthouse Accessibility Audit. Override this color if you want to change the link color, or use a Bootswatch theme */
 a {
@@ -185,19 +179,14 @@ jhi-product a {
   justify-content: center;
 }
 
+
+
 #addToCartButton {
   margin-right: 10px;
   border-radius: 10px;
   font-weight: bold;
 }
 
-#cartAmountInputField {
-  width: 15%;
-  margin-right: 10px;
-  border-radius: 10px;
-  padding-left: 5px;
-
-}
 
 #searchBar {
   display: flex;
@@ -210,35 +199,6 @@ jhi-product a {
   border-radius: 10px;
   text-align: center;
 }
-
-
-
-
-#adContainerLeft img {
-  position: fixed;
-  left: 0;
-  top: 1;
-  height: 90vh; /* Take the full height of the viewport */
-  width: 10vw; /* Set the width as a percentage of the viewport width */
-  object-fit: cover; 
-
-  
-}
-
-#adContainerRight img {
-  position: fixed;
-  right:0;
-  top: 1;
-  height: 90vh; /* Take the full height of the viewport */
-  width: 10vw; /* Set the width as a percentage of the viewport width */
-  object-fit: cover; 
-
-  
-}
-
-
-
-
 
 /* ==========================================================================
 entity detail page css

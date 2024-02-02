@@ -14,12 +14,14 @@ import { CartService } from 'app/entities/cart/service/cart.service';
 import { IProduct } from '../product.model';
 import { EntityArrayResponseType, ProductService } from '../service/product.service';
 import { ProductDeleteDialogComponent } from '../delete/product-delete-dialog.component';
+import HasAnyAuthorityDirective from 'app/shared/auth/has-any-authority.directive'; // Added to disable CRUD for User
 
 
 @Component({
   standalone: true,
   selector: 'jhi-product',
   templateUrl: './product.component.html',
+  styleUrl: './product.component.css', // Added for CSS
   imports: [
     RouterModule,
     FormsModule,
@@ -29,6 +31,8 @@ import { ProductDeleteDialogComponent } from '../delete/product-delete-dialog.co
     DurationPipe,
     FormatMediumDatetimePipe,
     FormatMediumDatePipe,
+    HasAnyAuthorityDirective // Added to disable CRUD for User
+
   ],
 })
 
@@ -69,18 +73,18 @@ export class ProductComponent implements OnInit {
     })
   }
 
-  // addToCart()
+  //addToCart()
   addToCart(product: IProduct): void {
-    this.cartService.addToCart(product);
-  }
-  //clearCartAmountInputFieldPlaceholderText()
-  clearCartAmountInputFieldPlaceholderText(): void {
-    const cartAmountInputField = document.getElementById('cartAmountInputField');
-    console.log("Hell")
-    if (cartAmountInputField) {
-      cartAmountInputField.innerText = "";  // No optional chaining needed here
+    const amountDropdown = document.getElementById(`cartAmountDropdown_${product.id}`) as HTMLSelectElement;
+
+    if (amountDropdown) {
+      const quantity = (amountDropdown.value === 'Custom') ? 1 : parseInt(amountDropdown.value, 10) || 1;
+
+      this.cartService.addToCart({ ...product, quantity });
+      amountDropdown.value = 'Amount';
     }
   }
+
   byteSize(base64String: string): string {
     return this.dataUtils.byteSize(base64String);
   }
