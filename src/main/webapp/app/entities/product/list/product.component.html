@@ -5,7 +5,7 @@
 
     <div id="searchBar">
       <input id="searchInput" type="text" [(ngModel)]="userInput" (keyup.enter)="searchProducts()"
-        placeholder="Suchen..."> <!-- searchProducts() on Enter Key Press -->
+        placeholder="Search..."> <!-- searchProducts() on Enter Key Press -->
     </div>
 
     <div *jhiHasAnyAuthority="'ROLE_ADMIN'" class="d-flex justify-content-end">
@@ -119,14 +119,7 @@
           </td>
           <td class="text-end">
             <div class="btn-group">
-              <select id="cartAmountDropdown_{{ product.id }}" class="form-select" aria-label="Default select example">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="4">Custom</option>
-              </select>
+
               <button id="addToCartButton" (click)="addToCart(product)" class="btn btn-warning"><fa-icon
                   icon="shopping-cart"></fa-icon> Add
                 <!-- addToCart() -->
@@ -174,10 +167,10 @@
   <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
     @for (product of products; track trackId){
     <div class="col mb-5">
-      <div class="card h-100">
+      <div class="card h-100 bg-transparent">
         <!-- Product image-->
         @if (product.image) {
-        <a (click)="openFile(product.image, product.imageContentType)">
+        <a (click)="openFile(product.image, product.imageContentType)" style="margin-top: 10px;">
           <img [src]="'data:' + product.imageContentType + ';base64,' + product.image" style="max-height: 30px"
             alt="product image" />
         </a>
@@ -199,21 +192,20 @@
           <div class="text-center">
             <a class="btn btn-outline-dark mt-auto" [routerLink]="['/product', product.id, 'view']">Details</a>
 
-          
+
             <button id="addToCartButton" (click)="addToCart(product)" class="btn btn-warning"><fa-icon
                 icon="shopping-cart"></fa-icon> Add
-
-          
               <!-- addToCart() -->
             </button>
-                  
-            <select id="cartAmountDropdown_{{ product.id }}" class="form-select" aria-label="Default select example">
+
+            <select id="cartAmountDropdown_{{ product.id }}" class="form-select" aria-label="Default select example"
+              style="margin: 5px auto; width: 30%;">
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
               <option value="4">4</option>
               <option value="5">5</option>
-              <option value="4">Custom</option>
+              <option value="Custom">Custom</option>
             </select>
           </div>
         </div>

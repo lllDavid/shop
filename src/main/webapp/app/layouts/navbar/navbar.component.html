@@ -1,6 +1,6 @@
 <nav data-cy="navbar" class="navbar navbar-dark navbar-expand-md bg-dark">
   <div class="container-fluid">
-  
+
     <a class="navbar-toggler d-lg-none" href="javascript:void(0);" data-toggle="collapse"
       data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
       aria-label="Toggle navigation" (click)="toggleNavbar()">
@@ -16,20 +16,27 @@
             </span>
           </a>
         </li>
-        
-        <li> <a class="dropdown-item" routerLink="/product" routerLinkActive="active"
-            [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-            <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-            <span jhiTranslate="global.menu.entities.product">Product</span>
+
+        <li *jhiHasAnyAuthority="'ROLE_USER'" ngbDropdown class="nav-item dropdown pointer" display="dynamic"      
+        routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"> <!-- added -->
+          <a class="nav-link" routerLink="/product" (click)="collapseNavbar()">
+            <span>
+              <fa-icon icon="bag-shopping"></fa-icon>
+
+              <span jhiTranslate="global.menu.entities.product">Product</span>
+            </span>
           </a>
         </li>
-        <li>
+        <li *jhiHasAnyAuthority="'ROLE_USER'" ngbDropdown class="nav-item dropdown pointer" display="dynamic"
+        routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"> <!-- added -->
+          <a class="nav-link" routerLink="/cart" (click)="collapseNavbar()">
+            <span>
+              <fa-icon icon="shopping-cart"></fa-icon>
 
-        <li>
-          <a class="dropdown-item" routerLink="/cart" routerLinkActive="active"
-            [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-            <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-            <span jhiTranslate="global.menu.entities.cart">Cart</span>
+              <span jhiTranslate="global.menu.entities.cart">Cart</span>
+            </span>
           </a>
         </li>
 
