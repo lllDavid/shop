@@ -6,8 +6,6 @@
 Bootstrap tweaks
 ===============================================================*/
 
-
-
 /* Increase contrast of links to get 100% on Lighthouse Accessibility Audit. Override this color if you want to change the link color, or use a Bootswatch theme */
 a {
   color: #533f03;
@@ -64,8 +62,8 @@ Generic styles
 /* other generic styles */
 
 .jh-card {
-  padding: 0px; // originally 1.5 %
-  margin-top: 7px; // originally 20px
+  padding: 1.5%;
+  margin-top: 20px;
   border: none;
 }
 
@@ -162,42 +160,8 @@ Custom alerts for notification
 entity list page css
 ========================================================================== */
 
-.table-entities thead th .d-flex>* {
+.table-entities thead th .d-flex > * {
   margin: auto 0;
-}
-
-jhi-product {
-  display: flex; // Center Products Page
-  flex-wrap: wrap;
-  flex-direction: column;
-  align-items: center;
-
-}
-
-jhi-product a {
-  display: flex; // Center Product Images
-  justify-content: center;
-}
-
-
-
-#addToCartButton {
-  margin-right: 10px;
-  border-radius: 10px;
-  font-weight: bold;
-}
-
-
-#searchBar {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-}
-
-#searchInput {
-  margin-bottom: 10px;
-  border-radius: 10px;
-  text-align: center;
 }
 
 /* ==========================================================================
@@ -211,7 +175,7 @@ entity detail page css
 }
 
 @media screen and (min-width: 768px) {
-  .row-md.jh-entity-details> {
+  .row-md.jh-entity-details > {
     dt {
       float: left;
       overflow: hidden;
@@ -220,7 +184,6 @@ entity detail page css
       text-overflow: ellipsis;
       white-space: nowrap;
       padding: 0.5em 0;
-
     }
 
     dd {
@@ -273,7 +236,6 @@ angular-cli removes postcss-rtl processed inline css, processed rules must be ad
     }
   }
 }
-
 
 jhi-footer {
   display: flex;

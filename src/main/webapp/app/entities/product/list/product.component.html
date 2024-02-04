@@ -3,9 +3,17 @@
     <span *jhiHasAnyAuthority="'ROLE_ADMIN'" jhiTranslate="shopApp.product.home.title">Products</span>
     <!-- Added *jhiHasAnyAuthority="'ROLE_ADMIN'"-->
 
-    <div id="searchBar">
-      <input id="searchInput" type="text" [(ngModel)]="userInput" (keyup.enter)="searchProducts()"
-        placeholder="Search..."> <!-- searchProducts() on Enter Key Press -->
+    <div id="searchBarAdmin">
+      <input
+        id="searchInputAdmin"
+        class="search"
+        autocomplete="off"
+        type="search"
+        [(ngModel)]="userInput"
+        (keyup.enter)="searchProducts()"
+        placeholder="Search"
+      />
+      <!-- searchProducts() on Enter Key Press -->
     </div>
 
     <div *jhiHasAnyAuthority="'ROLE_ADMIN'" class="d-flex justify-content-end">
@@ -15,8 +23,13 @@
         <span jhiTranslate="shopApp.product.home.refreshListLabel">Refresh list</span>
       </button>
 
-      <button *jhiHasAnyAuthority="'ROLE_ADMIN'" id="jh-create-entity" data-cy="entityCreateButton"
-        class="btn btn-primary jh-create-entity create-product" [routerLink]="['/product/new']">
+      <button
+        *jhiHasAnyAuthority="'ROLE_ADMIN'"
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-product"
+        [routerLink]="['/product/new']"
+      >
         <fa-icon icon="plus"></fa-icon>
         <span jhiTranslate="shopApp.product.home.createLabel">Create a new Product</span>
       </button>
@@ -28,189 +41,234 @@
   <jhi-alert></jhi-alert>
 
   @if (products?.length === 0) {
-  <div class="alert alert-warning" id="no-result">
-    <span jhiTranslate="shopApp.product.home.notFound">No Products found</span>
-  </div>
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="shopApp.product.home.notFound">No Products found</span>
+    </div>
   }
 
-
   @if (products && products.length > 0) {
-  <div class="table-responsive table-entities" id="entities">
-    <table class="table table-striped" aria-describedby="page-heading">
-      <thead>
-        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
-          <th scope="col" jhiSortBy="id">
-            <div *jhiHasAnyAuthority="'ROLE_ADMIN'" class="d-flex"> <!-- Added jhiHasAnyAuthority="'ROLE_ADMIN'"-->
-              <span jhiTranslate="global.field.id">ID</span>
-
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="name">
-            <div *jhiHasAnyAuthority="'ROLE_ADMIN'" class="d-flex"> <!-- Added jhiHasAnyAuthority="'ROLE_ADMIN'"-->
-              <span jhiTranslate="shopApp.product.name">Name</span>
-
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="description">
-            <div *jhiHasAnyAuthority="'ROLE_ADMIN'" class="d-flex"> <!-- Added jhiHasAnyAuthority="'ROLE_ADMIN'"-->
-              <span jhiTranslate="shopApp.product.description">Description</span>
-
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="price">
-            <div *jhiHasAnyAuthority="'ROLE_ADMIN'" class="d-flex"> <!-- Added jhiHasAnyAuthority="'ROLE_ADMIN'"-->
-              <span jhiTranslate="shopApp.product.price">Price</span>
-
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="inStock">
-            <div *jhiHasAnyAuthority="'ROLE_ADMIN'" class="d-flex"> <!-- Added jhiHasAnyAuthority="'ROLE_ADMIN'"-->
-              <span jhiTranslate="shopApp.product.inStock">In Stock</span>
-
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="image">
-            <div *jhiHasAnyAuthority="'ROLE_ADMIN'" class="d-flex"> <!-- Added jhiHasAnyAuthority="'ROLE_ADMIN'"-->
-              <span jhiTranslate="shopApp.product.image">Image</span>
-
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="category.id">
-            <div *jhiHasAnyAuthority="'ROLE_ADMIN'" class="d-flex"> <!-- Added jhiHasAnyAuthority="'ROLE_ADMIN'"-->
-              <span jhiTranslate="shopApp.product.category">Category</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col"></th>
-        </tr>
-      </thead>
-      <tbody>
-        @for (product of products; track trackId) {
-
-        <tr data-cy="entityTable">
-          <td>
-            <a [routerLink]="['/product', product.id, 'view']">{{ product.id }}</a>
-          </td>
-          <td>{{ product.name }}</td>
-          <td>{{ product.description }}</td>
-          <td>{{ product.price | currency:'EUR'}}</td> <!-- Added Currency Pipe -->
-          <td>{{ product.inStock }}</td>
-          <td>
-            @if (product.image) {
-            <a (click)="openFile(product.image, product.imageContentType)">
-              <img [src]="'data:' + product.imageContentType + ';base64,' + product.image" style="max-height: 30px"
-                alt="product image" />
-            </a>
-            }
-          </td>
-          <td>
-            @if (product.category) {
-            <div>
-              <a [routerLink]="['/category', product.category.id, 'view']">{{ product.category.name }}</a>
-              <!-- Changed product.category.id to name -->
-            </div>
-            }
-          </td>
-          <td class="text-end">
-            <div class="btn-group">
-
-              <button id="addToCartButton" (click)="addToCart(product)" class="btn btn-warning"><fa-icon
-                  icon="shopping-cart"></fa-icon> Add
-                <!-- addToCart() -->
-              </button>
-
-
-
-              <a *jhiHasAnyAuthority="'ROLE_ADMIN'" [routerLink]="['/product', product.id, 'view']"
-                class="btn btn-info btn-sm" data-cy="entityDetailsButton">
-                <fa-icon icon="eye"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+            <th scope="col" jhiSortBy="id">
+              <div *jhiHasAnyAuthority="'ROLE_ADMIN'" class="d-flex">
                 <!-- Added jhiHasAnyAuthority="'ROLE_ADMIN'"-->
-              </a>
+                <span jhiTranslate="global.field.id">ID</span>
 
-              <a *jhiHasAnyAuthority="'ROLE_ADMIN'" [routerLink]="['/product', product.id, 'edit']"
-                class="btn btn-primary btn-sm" data-cy="entityEditButton">
-                <fa-icon icon="pencil-alt"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="name">
+              <div *jhiHasAnyAuthority="'ROLE_ADMIN'" class="d-flex">
                 <!-- Added jhiHasAnyAuthority="'ROLE_ADMIN'"-->
-              </a>
+                <span jhiTranslate="shopApp.product.name">Name</span>
 
-              <button *jhiHasAnyAuthority="'ROLE_ADMIN'" type="submit" (click)="delete(product)"
-                class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
-                <fa-icon icon="times"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="description">
+              <div *jhiHasAnyAuthority="'ROLE_ADMIN'" class="d-flex">
                 <!-- Added jhiHasAnyAuthority="'ROLE_ADMIN'"-->
-              </button>
+                <span jhiTranslate="shopApp.product.description">Description</span>
 
-            </div>
-          </td>
-        </tr>
-        }
-      </tbody>
-    </table>
-  </div>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="price">
+              <div *jhiHasAnyAuthority="'ROLE_ADMIN'" class="d-flex">
+                <!-- Added jhiHasAnyAuthority="'ROLE_ADMIN'"-->
+                <span jhiTranslate="shopApp.product.price">Price</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="inStock">
+              <div *jhiHasAnyAuthority="'ROLE_ADMIN'" class="d-flex">
+                <!-- Added jhiHasAnyAuthority="'ROLE_ADMIN'"-->
+                <span jhiTranslate="shopApp.product.inStock">In Stock</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="image">
+              <div *jhiHasAnyAuthority="'ROLE_ADMIN'" class="d-flex">
+                <!-- Added jhiHasAnyAuthority="'ROLE_ADMIN'"-->
+                <span jhiTranslate="shopApp.product.image">Image</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="category.id">
+              <div *jhiHasAnyAuthority="'ROLE_ADMIN'" class="d-flex">
+                <!-- Added jhiHasAnyAuthority="'ROLE_ADMIN'"-->
+                <span jhiTranslate="shopApp.product.category">Category</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (product of products; track trackId) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/product', product.id, 'view']">{{ product.id }}</a>
+              </td>
+              <td>{{ product.name }}</td>
+              <td>{{ product.description }}</td>
+              <td>{{ product.price | currency: 'EUR' }}</td>
+              <!-- Added Currency Pipe -->
+              <td>{{ product.inStock }}</td>
+              <td>
+                @if (product.image) {
+                  <a (click)="openFile(product.image, product.imageContentType)">
+                    <img
+                      [src]="'data:' + product.imageContentType + ';base64,' + product.image"
+                      style="max-height: 30px"
+                      alt="product image"
+                    />
+                  </a>
+                }
+              </td>
+              <td>
+                @if (product.category) {
+                  <div>
+                    <a [routerLink]="['/category', product.category.id, 'view']">{{ product.category.name }}</a>
+                    <!-- Changed product.category.id to name -->
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <button id="addToCartButton" (click)="addToCart(product)" class="btn btn-warning">
+                    <fa-icon icon="shopping-cart"></fa-icon> Add
+                    <!-- addToCart() -->
+                  </button>
+
+                  <a
+                    *jhiHasAnyAuthority="'ROLE_ADMIN'"
+                    [routerLink]="['/product', product.id, 'view']"
+                    class="btn btn-info btn-sm"
+                    data-cy="entityDetailsButton"
+                  >
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                    <!-- Added jhiHasAnyAuthority="'ROLE_ADMIN'"-->
+                  </a>
+
+                  <a
+                    *jhiHasAnyAuthority="'ROLE_ADMIN'"
+                    [routerLink]="['/product', product.id, 'edit']"
+                    class="btn btn-primary btn-sm"
+                    data-cy="entityEditButton"
+                  >
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                    <!-- Added jhiHasAnyAuthority="'ROLE_ADMIN'"-->
+                  </a>
+
+                  <button
+                    *jhiHasAnyAuthority="'ROLE_ADMIN'"
+                    type="submit"
+                    (click)="delete(product)"
+                    class="btn btn-danger btn-sm"
+                    data-cy="entityDeleteButton"
+                  >
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                    <!-- Added jhiHasAnyAuthority="'ROLE_ADMIN'"-->
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
   }
 </div>
 
-
 <!------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------>
 <!------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------>
 <!------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------>
+<div id="productMainContainer">
+  <h1>Getränke</h1>
 
-<div class="container px-4 px-lg-5 mt-5">
-  <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-    @for (product of products; track trackId){
-    <div class="col mb-5">
-      <div class="card h-100 bg-transparent">
-        <!-- Product image-->
-        @if (product.image) {
-        <a (click)="openFile(product.image, product.imageContentType)" style="margin-top: 10px;">
-          <img [src]="'data:' + product.imageContentType + ';base64,' + product.image" style="max-height: 30px"
-            alt="product image" />
-        </a>
-        }
+  <div id="searchBarUser">
+    <input
+      id="searchInputUser"
+      class="search"
+      autocomplete="off"
+      type="search"
+      [(ngModel)]="userInput"
+      (keyup.enter)="searchProducts()"
+      (click)="clearSearchFieldText()"
+      placeholder="Search"
+    />
+    <!-- searchProducts() on Enter Key Press -->
+  </div>
 
+  <div class="container px-4 px-lg-5 mt-5">
+    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+      @for (product of products; track trackId) {
+        <div class="col mb-5">
+          <div class="card h-100 bg-transparent">
+            @if (product.image) {
+              <a (click)="openFile(product.image, product.imageContentType)" style="margin-top: 10px">
+                <img [src]="'data:' + product.imageContentType + ';base64,' + product.image" style="max-height: 60px" alt="product image" />
+              </a>
+            }
 
-        <div class="card-body p-4">
-          <div class="text-center">
-            <!-- Product name-->
-            <a [routerLink]="['/product', product.id, 'view']">{{ product.id }}</a>
-            <h5 class="fw-bolder">{{ product.name }}</h5>
-            <!-- Product price-->
-            {{ product.price | currency:'EUR' }} <a>In Stock:</a>{{ product.inStock }}
+            <div class="card-body p-4">
+              <div class="text-center">
+                <h5 class="fw-bolder">{{ product.name }}</h5>
+                {{ product.price | currency: 'EUR' }} <a>In Stock:</a>{{ product.inStock }}
+              </div>
+            </div>
+
+            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+              <div class="text-center">
+                <a class="btn btn-outline-dark mt-auto" [routerLink]="['/product', product.id, 'view']">Details</a>
+
+                <button id="addToCartButton" (click)="addToCart(product)" class="btn btn-warning">
+                  <fa-icon icon="shopping-cart"></fa-icon> Add
+                  <!-- addToCart() -->
+                </button>
+
+                <div [ngSwitch]="selectedQuantity">
+                  <!-- Custom Input Field -->
+                  <ng-container *ngSwitchCase="'Custom'">
+                    <input
+                      [(ngModel)]="customQuantity"
+                      id="customQuantityInput"
+                      type="number"
+                      placeholder="Enter quantity:"
+                      style="margin: 5px auto; width: 60%"
+                    />
+                  </ng-container>
+
+                  <ng-container *ngSwitchDefault>
+                    <select
+                      [(ngModel)]="selectedQuantity"
+                      class="form-select"
+                      aria-label="Default select example"
+                      style="margin: 5px auto; width: 30%"
+                    >
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                      <option value="Custom">Custom</option>
+                    </select>
+                  </ng-container>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-
-        <!-- Product actions-->
-        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-          <div class="text-center">
-            <a class="btn btn-outline-dark mt-auto" [routerLink]="['/product', product.id, 'view']">Details</a>
-
-
-            <button id="addToCartButton" (click)="addToCart(product)" class="btn btn-warning"><fa-icon
-                icon="shopping-cart"></fa-icon> Add
-              <!-- addToCart() -->
-            </button>
-
-            <select id="cartAmountDropdown_{{ product.id }}" class="form-select" aria-label="Default select example"
-              style="margin: 5px auto; width: 30%;">
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-              <option value="Custom">Custom</option>
-            </select>
-          </div>
-        </div>
-      </div>
+      }
     </div>
-    }
   </div>
 </div>

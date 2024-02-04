@@ -16,7 +16,6 @@ import { EntityArrayResponseType, ProductService } from '../service/product.serv
 import { ProductDeleteDialogComponent } from '../delete/product-delete-dialog.component';
 import HasAnyAuthorityDirective from 'app/shared/auth/has-any-authority.directive'; // Added to disable CRUD for User
 
-
 @Component({
   standalone: true,
   selector: 'jhi-product',
@@ -31,14 +30,14 @@ import HasAnyAuthorityDirective from 'app/shared/auth/has-any-authority.directiv
     DurationPipe,
     FormatMediumDatetimePipe,
     FormatMediumDatePipe,
-    HasAnyAuthorityDirective // Added to disable CRUD for User
-
+    HasAnyAuthorityDirective, // Added to disable CRUD for User
   ],
 })
-
 export class ProductComponent implements OnInit {
   products?: IProduct[];
-  userInput: string = '';    // searchProducts()
+  userInput: string = ''; // searchProducts()
+  selectedQuantity: string = '1'; // addToCart()
+  customQuantity?: number | null = null; // // addToCart()
 
   isLoading = false;
 
@@ -53,9 +52,7 @@ export class ProductComponent implements OnInit {
     protected sortService: SortService,
     protected dataUtils: DataUtils,
     protected modalService: NgbModal,
-  ) {
-
-  }
+  ) {}
 
   trackId = (_index: number, item: IProduct): number => this.productService.getProductIdentifier(item);
 
@@ -69,20 +66,24 @@ export class ProductComponent implements OnInit {
       next: response => {
         console.log('Search Response: ', response.body);
         this.products = response.body ? response.body : undefined;
-      }
-    })
+      },
+    });
+  }
+
+  // clearSearchFieldText() // funktioniert nicht
+  clearSearchFieldText() {
+    let text = document.getElementById('searchInputUser')?.innerText;
+    if (text != null) {
+      text = '';
+      console.log('Done');
+    }
   }
 
   //addToCart()
   addToCart(product: IProduct): void {
-    const amountDropdown = document.getElementById(`cartAmountDropdown_${product.id}`) as HTMLSelectElement;
-
-    if (amountDropdown) {
-      const quantity = (amountDropdown.value === 'Custom') ? 1 : parseInt(amountDropdown.value, 10) || 1;
-
-      this.cartService.addToCart({ ...product, quantity });
-      amountDropdown.value = 'Amount';
-    }
+    const quantity = this.selectedQuantity === 'Custom' ? this.customQuantity || 1 : parseInt(this.selectedQuantity, 10) || 1;
+    this.cartService.addToCart({ ...product, quantity });
+    this.selectedQuantity = '1';
   }
 
   byteSize(base64String: string): string {
