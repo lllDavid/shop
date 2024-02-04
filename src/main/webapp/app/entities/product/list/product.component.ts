@@ -70,7 +70,7 @@ export class ProductComponent implements OnInit {
     });
   }
 
-  // clearSearchFieldText() // funktioniert nicht
+  // clearSearchFieldText()    funktioniert nicht
   clearSearchFieldText() {
     let text = document.getElementById('searchInputUser')?.innerText;
     if (text != null) {

@@ -106,6 +106,7 @@ body {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
+/* ---------------Added----------------------------------------------------------- */
 h1 {
   margin: 200px;
   padding: 0px;
@@ -121,7 +122,7 @@ a {
 }
 
 #addToCartButton {
-  margin-right: 10px;
+  margin: 5px;
   border-radius: 10px;
   font-weight: bold;
 }
@@ -158,13 +159,14 @@ a {
   height: 40px;
   border: 2px solid #555;
   background: transparent url('./search.svg') no-repeat 13px;
-  background-size: 20px;
+  background-size: 25px;
   margin-bottom: 10px;
   border-radius: 10px;
   text-align: center;
-
   font-size: 30px;
 }
+
+/* ------------------------------------------------------------------------------- */
 
 hr {
   margin: 1rem 0;

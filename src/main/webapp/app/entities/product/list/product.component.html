@@ -1,3 +1,6 @@
+<!-----------------------------------ADMIN------------------------------------------------------------------------------------------------------------------------------------------------------->
+<!-----------------------------------ADMIN--------------------------------------------------------------------------------------------------------------------------------------------------->
+<!-----------------------------------ADMIN--------------------------------------------------------------------------------------------------------------------------------------------------->
 <div *jhiHasAnyAuthority="'ROLE_ADMIN'">
   <h2 id="page-heading" data-cy="ProductHeading">
     <span *jhiHasAnyAuthority="'ROLE_ADMIN'" jhiTranslate="shopApp.product.home.title">Products</span>
@@ -141,11 +144,6 @@
               </td>
               <td class="text-end">
                 <div class="btn-group">
-                  <button id="addToCartButton" (click)="addToCart(product)" class="btn btn-warning">
-                    <fa-icon icon="shopping-cart"></fa-icon> Add
-                    <!-- addToCart() -->
-                  </button>
-
                   <a
                     *jhiHasAnyAuthority="'ROLE_ADMIN'"
                     [routerLink]="['/product', product.id, 'view']"
@@ -189,9 +187,10 @@
   }
 </div>
 
-<!------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------>
-<!------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------>
-<!------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------>
+<!-----------------------------------USER------------------------------------------------------------------------------------------------------------------------------------------------------->
+<!-----------------------------------USER--------------------------------------------------------------------------------------------------------------------------------------------------->
+<!-----------------------------------USER--------------------------------------------------------------------------------------------------------------------------------------------------->
+
 <div id="productMainContainer">
   <h1>Getränke</h1>
 
@@ -223,7 +222,7 @@
             <div class="card-body p-4">
               <div class="text-center">
                 <h5 class="fw-bolder">{{ product.name }}</h5>
-                {{ product.price | currency: 'EUR' }} <a>In Stock:</a>{{ product.inStock }}
+                {{ product.price | currency: 'EUR' }} <a style="margin: 5px">In Stock:</a>{{ product.inStock }}
               </div>
             </div>
 
@@ -237,13 +236,13 @@
                 </button>
 
                 <div [ngSwitch]="selectedQuantity">
-                  <!-- Custom Input Field -->
+                  <!-- Custom Amount Input Field -->
                   <ng-container *ngSwitchCase="'Custom'">
                     <input
                       [(ngModel)]="customQuantity"
                       id="customQuantityInput"
                       type="number"
-                      placeholder="Enter quantity:"
+                      placeholder="Enter amount:"
                       style="margin: 5px auto; width: 60%"
                     />
                   </ng-container>
@@ -253,7 +252,7 @@
                       [(ngModel)]="selectedQuantity"
                       class="form-select"
                       aria-label="Default select example"
-                      style="margin: 5px auto; width: 30%"
+                      style="margin: 5px auto; width: 35%"
                     >
                       <option value="1">1</option>
                       <option value="2">2</option>
