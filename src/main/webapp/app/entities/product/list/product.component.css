@@ -127,25 +127,11 @@ a {
   font-weight: bold;
 }
 
-.dropdown {
-  width: 20%;
-}
-
-#searchBarAdmin {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-}
-
-#searchInputAdmin {
-  width: 20%;
-  height: 40px;
-  border: 2px solid #555;
-  background: transparent url('./search.svg') no-repeat 13px;
-  background-size: 20px;
-  margin-bottom: 10px;
-  border-radius: 10px;
-  text-align: center;
+/* Disable scroll on Custom Input Field */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 #searchBarUser {

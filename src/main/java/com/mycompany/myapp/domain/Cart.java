@@ -131,6 +131,7 @@ public class Cart implements Serializable {
             "id=" + getId() +
             ", totalPrice=" + getTotalPrice() +
             ", productAmount=" + getProductAmount() +
+            ", product=" + getProduct() + // added
             "}";
     }
 }

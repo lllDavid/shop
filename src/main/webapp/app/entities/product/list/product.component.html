@@ -7,19 +7,6 @@
     <span *jhiHasAnyAuthority="'ROLE_ADMIN'" jhiTranslate="shopApp.product.home.title">Products</span>
     <!-- Added *jhiHasAnyAuthority="'ROLE_ADMIN'"-->
 
-    <div id="searchBarAdmin">
-      <input
-        id="searchInputAdmin"
-        class="search"
-        autocomplete="off"
-        type="search"
-        [(ngModel)]="userInput"
-        (keyup.enter)="searchProducts()"
-        placeholder="Search"
-      />
-      <!-- searchProducts() on Enter Key Press -->
-    </div>
-
     <div *jhiHasAnyAuthority="'ROLE_ADMIN'" class="d-flex justify-content-end">
       <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
         <!-- Added *jhiHasAnyAuthority="'ROLE_ADMIN'"-->
@@ -249,7 +236,7 @@
                         id="customQuantityInput"
                         type="number"
                         placeholder="Enter amount:"
-                        style="margin: 5px auto; width: 60%"
+                        style="margin: 5px auto; width: 50%"
                       />
                     </ng-container>
 

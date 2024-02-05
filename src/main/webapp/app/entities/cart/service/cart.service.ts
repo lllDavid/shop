@@ -8,7 +8,6 @@ import { createRequestOption } from 'app/core/request/request-util';
 import { ICart, NewCart } from '../cart.model';
 import { IProduct } from 'app/entities/product/product.model';
 
-
 export type PartialUpdateCart = Partial<ICart> & Pick<ICart, 'id'>;
 
 export type EntityResponseType = HttpResponse<ICart>;
@@ -21,8 +20,7 @@ export class CartService {
   constructor(
     protected http: HttpClient,
     protected applicationConfigService: ApplicationConfigService,
-
-  ) { }
+  ) {}
 
   // addToCart()
   addToCart(product: IProduct): void {
@@ -35,18 +33,21 @@ export class CartService {
     };
 
     this.create(newCart).subscribe({
-      next: (response) => {
+      next: response => {
         let createdCart: ICart = {
-          id: newCart.id ?? (response.body?.id ?? 0),
-          totalPrice: newCart.totalPrice,
+          id: newCart.id ?? response.body?.id ?? 0,
+          totalPrice: (newCart.totalPrice ?? 0) * (newCart.productAmount ?? 1) || 0, //added
           productAmount: newCart.productAmount,
           customer: newCart.customer,
           product: newCart.product,
         };
       },
     });
+    //added
+    console.log(newCart.totalPrice);
+    const totalPrice = (newCart.totalPrice ?? 0) * (newCart.productAmount ?? 1) || 0;
+    console.log('Calculated Total Price:', totalPrice);
   }
-
 
   create(cart: NewCart): Observable<EntityResponseType> {
     return this.http.post<ICart>(this.resourceUrl, cart, { observe: 'response' });

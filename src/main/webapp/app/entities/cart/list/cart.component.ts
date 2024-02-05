@@ -13,7 +13,6 @@ import { ICart } from '../cart.model';
 import { EntityArrayResponseType, CartService } from '../service/cart.service';
 import { CartDeleteDialogComponent } from '../delete/cart-delete-dialog.component';
 
-
 @Component({
   standalone: true,
   selector: 'jhi-cart',
@@ -29,7 +28,6 @@ import { CartDeleteDialogComponent } from '../delete/cart-delete-dialog.componen
     FormatMediumDatePipe,
   ],
 })
-
 export class CartComponent implements OnInit {
   carts?: ICart[];
   isLoading = false;
@@ -43,7 +41,7 @@ export class CartComponent implements OnInit {
     public router: Router,
     protected sortService: SortService,
     protected modalService: NgbModal,
-  ) { }
+  ) {}
 
   trackId = (_index: number, item: ICart): number => this.cartService.getCartIdentifier(item);
 
@@ -71,6 +69,7 @@ export class CartComponent implements OnInit {
     this.loadFromBackendWithRouteInformations().subscribe({
       next: (res: EntityArrayResponseType) => {
         this.onResponseSuccess(res);
+        console.log(res); //added
       },
     });
   }
