@@ -8,16 +8,16 @@
       "entities": {
         "main": "Entities",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)",
-        "product": "Product",
+        "product": "Products",
         "category": "Category",
         "customer": "Customer",
         "order": "Order",
         "cart": "Cart",
-        "paymentMethod": "Payment Method",
+        "paymentMethod": "Payment",
         "shippingInformation": "Shipping Information"
       },
       "account": {
-        "main": "Account",
+        "main": "My Account",
         "settings": "Settings",
         "password": "Password",
         "sessions": "Sessions",

@@ -13,7 +13,7 @@ export interface IProduct {
   category?: ICategory | null;
   orders?: IOrder[] | null;
   favoritedByCustomers?: ICustomer[] | null;
-  quantity?: number; // Added for addToCart()
+  quantity?: number | any; // Added for addToCart()
 }
 
 export type NewProduct = Omit<IProduct, 'id'> & { id: null };

@@ -4,6 +4,7 @@ import com.mycompany.myapp.domain.Product;
 import com.mycompany.myapp.repository.ProductRepository;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -103,6 +104,12 @@ public class ProductService {
     public Optional<Product> findOne(Long id) {
         log.debug("Request to get Product : {}", id);
         return productRepository.findById(id);
+    }
+
+    // added for autocomplete
+    public List<String> findSuggestions(String query) {
+        List<String> suggestions = productRepository.findNamesByQuery(query);
+        return suggestions;
     }
 
     /**

@@ -8,8 +8,12 @@
         <span jhiTranslate="shopApp.cart.home.refreshListLabel">Refresh list</span>
       </button>
 
-      <button id="jh-create-entity" data-cy="entityCreateButton" class="btn btn-primary jh-create-entity create-cart"
-        [routerLink]="['/cart/new']">
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-cart"
+        [routerLink]="['/cart/new']"
+      >
         <fa-icon icon="plus"></fa-icon>
         <span jhiTranslate="shopApp.cart.home.createLabel">Create a new Cart</span>
       </button>
@@ -21,96 +25,98 @@
   <jhi-alert></jhi-alert>
 
   @if (carts?.length === 0) {
-  <div class="alert alert-warning" id="no-result">
-    <span jhiTranslate="shopApp.cart.home.notFound">No Carts found</span>
-  </div>
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="shopApp.cart.home.notFound">No Carts found</span>
+    </div>
   }
 
   @if (carts && carts.length > 0) {
-  <div class="table-responsive table-entities" id="entities">
-    <table class="table table-striped" aria-describedby="page-heading">
-      <thead>
-        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
-          <th scope="col" jhiSortBy="id">
-            <div class="d-flex">
-              <span jhiTranslate="global.field.id">ID</span>
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span jhiTranslate="global.field.id">ID</span>
 
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="totalPrice">
-            <div class="d-flex">
-              <span jhiTranslate="shopApp.cart.totalPrice">Total Price</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="totalPrice">
+              <div class="d-flex">
+                <span jhiTranslate="shopApp.cart.totalPrice">Total Price</span>
 
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="productAmount">
-            <div class="d-flex">
-              <span jhiTranslate="shopApp.cart.productAmount">Product Amount</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="productAmount">
+              <div class="d-flex">
+                <span jhiTranslate="shopApp.cart.productAmount">Product Amount</span>
 
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="customer.id">
-            <div class="d-flex">
-              <span jhiTranslate="shopApp.cart.customer">Customer</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="product.id">
-            <div class="d-flex">
-              <span jhiTranslate="shopApp.cart.product">Product</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col"></th>
-        </tr>
-      </thead>
-      <tbody>
-        @for (cart of carts; track trackId) {
-        <tr data-cy="entityTable">
-          <td>
-            <a [routerLink]="['/cart', cart.id, 'view']">{{ cart.id }}</a>
-          </td>
-          <td>{{ cart.totalPrice | currency:'EUR'}}</td> <!--Added currency pipe-->
-          <td>{{ cart.productAmount }}</td>
-          <td>
-            @if (cart.customer) {
-            <div>
-              <a [routerLink]="['/customer', cart.customer.id, 'view']">{{ cart.customer.id }}</a>
-            </div>
-            }
-          </td>
-          <td>
-            @if (cart.product) {
-            <div>
-              <p [routerLink]="['/product', cart.product.id, 'view']">{{ cart.product.name }}</p> <!-- Changed id to name-->
-            </div>
-            }
-          </td>
-          <td class="text-end">
-            <div class="btn-group">
-              <a [routerLink]="['/cart', cart.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
-                <fa-icon icon="eye"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
-              </a>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="customer.id">
+              <div class="d-flex">
+                <span jhiTranslate="shopApp.cart.customer">Customer</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="product.id">
+              <div class="d-flex">
+                <span jhiTranslate="shopApp.cart.product">Product</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (cart of carts; track trackId) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/cart', cart.id, 'view']">{{ cart.id }}</a>
+              </td>
+              <td>{{ (cart.totalPrice ?? 0) * (cart.productAmount ?? 0) | currency: 'EUR' }}</td>
+              <!--Added currency pipe-->
+              <td>{{ cart.productAmount }}</td>
+              <td>
+                @if (cart.customer) {
+                  <div>
+                    <a [routerLink]="['/customer', cart.customer.id, 'view']">{{ cart.customer.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (cart.product) {
+                  <div>
+                    <p [routerLink]="['/product', cart.product.id, 'view']">{{ cart.product.name }}</p>
+                    <!-- Changed id to name-->
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/cart', cart.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                  </a>
 
-              <a [routerLink]="['/cart', cart.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
-                <fa-icon icon="pencil-alt"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
-              </a>
+                  <a [routerLink]="['/cart', cart.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                  </a>
 
-              <button type="submit" (click)="delete(cart)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
-                <fa-icon icon="times"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
-              </button>
-            </div>
-          </td>
-        </tr>
-        }
-      </tbody>
-    </table>
-  </div>
+                  <button type="submit" (click)="delete(cart)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
   }
 </div>

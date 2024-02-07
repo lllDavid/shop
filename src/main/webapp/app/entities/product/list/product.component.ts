@@ -14,13 +14,13 @@ import { CartService } from 'app/entities/cart/service/cart.service';
 import { IProduct } from '../product.model';
 import { EntityArrayResponseType, ProductService } from '../service/product.service';
 import { ProductDeleteDialogComponent } from '../delete/product-delete-dialog.component';
-import HasAnyAuthorityDirective from 'app/shared/auth/has-any-authority.directive'; // Added to disable CRUD for User
+import HasAnyAuthorityDirective from 'app/shared/auth/has-any-authority.directive';
 
 @Component({
   standalone: true,
   selector: 'jhi-product',
   templateUrl: './product.component.html',
-  styleUrl: './product.component.css', // Added for CSS
+  styleUrl: './product.component.css',
   imports: [
     RouterModule,
     FormsModule,
@@ -30,14 +30,14 @@ import HasAnyAuthorityDirective from 'app/shared/auth/has-any-authority.directiv
     DurationPipe,
     FormatMediumDatetimePipe,
     FormatMediumDatePipe,
-    HasAnyAuthorityDirective, // Added to disable CRUD for User
+    HasAnyAuthorityDirective,
   ],
 })
 export class ProductComponent implements OnInit {
   products?: IProduct[];
   userInput: string = ''; // searchProducts()
-  selectedQuantity: string = '1'; // addToCart()
-  customQuantity?: number | null = null; // // addToCart()
+  autocompleteSuggestions: string[] = []; // getAutocompleteSuggestions()
+  customQuantity?: number | null = null; // addToCart()
 
   isLoading = false;
 
@@ -46,7 +46,7 @@ export class ProductComponent implements OnInit {
 
   constructor(
     protected productService: ProductService,
-    private cartService: CartService, // addToCart()
+    private cartService: CartService,
     protected activatedRoute: ActivatedRoute,
     public router: Router,
     protected sortService: SortService,
@@ -62,28 +62,37 @@ export class ProductComponent implements OnInit {
 
   // searchProducts()
   searchProducts(): void {
-    this.productService.findByName(this.userInput).subscribe({
+    this.productService.findProductByName(this.userInput).subscribe({
       next: response => {
-        console.log('Search Response: ', response.body);
         this.products = response.body ? response.body : undefined;
       },
     });
   }
 
-  // clearSearchFieldText()    funktioniert nicht
-  clearSearchFieldText() {
-    let text = document.getElementById('searchInputUser')?.innerText;
-    if (text != null) {
-      text = '';
-      console.log('Done');
+  // getAutocompleteSuggestions()
+  getAutocompleteSuggestions(): void {
+    console.log('Aufruf getAutocompleteSuggestions()');
+    if (this.userInput.trim() !== '') {
+      this.productService.findAutocompleteSuggestions(this.userInput).subscribe(response => {
+        this.autocompleteSuggestions = response;
+      });
+    } else {
+      this.autocompleteSuggestions = [];
     }
+  }
+
+  //selectAutocompleteSuggestion()
+  selectAutocompleteSuggestion(suggestion: string): void {
+    this.userInput = suggestion;
+    this.autocompleteSuggestions = [];
+    this.searchProducts();
   }
 
   //addToCart()
   addToCart(product: IProduct): void {
-    const quantity = this.selectedQuantity === 'Custom' ? this.customQuantity || 1 : parseInt(this.selectedQuantity, 10) || 1;
+    const quantity = product.quantity === 'Custom' ? this.customQuantity || 1 : parseInt(product.quantity, 10) || 1;
     this.cartService.addToCart({ ...product, quantity });
-    this.selectedQuantity = '1';
+    product.quantity = '1';
   }
 
   byteSize(base64String: string): string {

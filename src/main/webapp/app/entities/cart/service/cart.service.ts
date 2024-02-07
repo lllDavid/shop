@@ -36,17 +36,13 @@ export class CartService {
       next: response => {
         let createdCart: ICart = {
           id: newCart.id ?? response.body?.id ?? 0,
-          totalPrice: (newCart.totalPrice ?? 0) * (newCart.productAmount ?? 1) || 0, //added
+          totalPrice: newCart.totalPrice,
           productAmount: newCart.productAmount,
           customer: newCart.customer,
           product: newCart.product,
         };
       },
     });
-    //added
-    console.log(newCart.totalPrice);
-    const totalPrice = (newCart.totalPrice ?? 0) * (newCart.productAmount ?? 1) || 0;
-    console.log('Calculated Total Price:', totalPrice);
   }
 
   create(cart: NewCart): Observable<EntityResponseType> {

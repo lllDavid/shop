@@ -17,7 +17,8 @@
           </dd>
           <dt><span jhiTranslate="shopApp.cart.totalPrice">Total Price</span></dt>
           <dd>
-            <span>{{ cart.totalPrice | currency:'EUR' }}</span> <!-- Added currency-->
+            <span> {{ (cart.totalPrice ?? 0) * (cart.productAmount ?? 0) | currency: 'EUR' }}</span>
+            <!-- Added currency-->
           </dd>
           <dt><span jhiTranslate="shopApp.cart.productAmount">Product Amount</span></dt>
           <dd>
@@ -34,8 +35,9 @@
           <dt><span jhiTranslate="shopApp.cart.product">Product</span></dt>
           <dd>
             @if (cart.product) {
-              <div> 
-                <a [routerLink]="['/product', cart.product.id, 'view']">{{ cart.product.name }}</a> <!-- Changed id to name-->
+              <div>
+                <a [routerLink]="['/product', cart.product.id, 'view']">{{ cart.product.name }}</a>
+                <!-- Changed id to name-->
               </div>
             }
           </dd>

@@ -1,29 +1,27 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { HttpParams } from '@angular/common/http';   // Added
+import { HttpParams } from '@angular/common/http'; // Added
 
 import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
 import { IProduct, NewProduct } from '../product.model';
 
-
 export type PartialUpdateProduct = Partial<IProduct> & Pick<IProduct, 'id'>;
 
 export type EntityResponseType = HttpResponse<IProduct>;
 export type EntityArrayResponseType = HttpResponse<IProduct[]>;
 
-
 @Injectable({ providedIn: 'root' })
 export class ProductService {
+  private apiUrl = '/api/products';
   protected resourceUrl = this.applicationConfigService.getEndpointFor('api/products');
 
   constructor(
     protected http: HttpClient,
     protected applicationConfigService: ApplicationConfigService,
-  ) { }
-
+  ) {}
 
   create(product: NewProduct): Observable<EntityResponseType> {
     return this.http.post<IProduct>(this.resourceUrl, product, { observe: 'response' });
@@ -41,10 +39,18 @@ export class ProductService {
     return this.http.get<IProduct>(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
-  // findByName()
-  findByName(name: string): Observable<EntityArrayResponseType> {
+  // findProductByName()
+  findProductByName(name: string): Observable<EntityArrayResponseType> {
     const params = new HttpParams().set('name.contains', name);
     return this.http.get<IProduct[]>(this.resourceUrl, { params, observe: 'response' });
+  }
+
+  //findAutocompleteSuggestions()
+  findAutocompleteSuggestions(query: string): Observable<string[]> {
+    const backendUrl = 'http://localhost:8080';
+    const autocompleteAPI = '/api/products/autocomplete';
+    const resourceUrl = `${backendUrl}${autocompleteAPI}`;
+    return this.http.get<string[]>(`${resourceUrl}?query=${query}`);
   }
 
   query(req?: any): Observable<EntityArrayResponseType> {

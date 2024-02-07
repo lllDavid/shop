@@ -179,89 +179,90 @@
 <!-----------------------------------USER------------------------------------------------------------------------------------------------------------------------------------------------------->
 <!-----------------------------------USER------------------------------------------------------------------------------------------------------------------------------------------------------->
 <!-----------------------------------USER------------------------------------------------------------------------------------------------------------------------------------------------------->
-<div id="background">
-  <div id="productMainContainer">
-    <h1>Getränke</h1>
 
-    <div id="searchBarUser">
-      <input
-        id="searchInputUser"
-        class="search"
-        autocomplete="off"
-        type="search"
-        [(ngModel)]="userInput"
-        (keyup.enter)="searchProducts()"
-        (click)="clearSearchFieldText()"
-        placeholder="Search"
-      />
-      <!-- searchProducts() on Enter Key Press -->
-    </div>
+<div>
+  <h1>Getränke</h1>
 
-    <div class="container px-4 px-lg-5 mt-5">
-      <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-        @for (product of products; track trackId) {
-          <div class="col mb-5">
-            <div class="card h-100 bg-transparent" style="background-color: rgba(255, 255, 255, 0)">
-              @if (product.image) {
-                <a (click)="openFile(product.image, product.imageContentType)" style="margin-top: 10px">
-                  <img
-                    [src]="'data:' + product.imageContentType + ';base64,' + product.image"
-                    style="max-height: 60px"
-                    alt="product image"
-                  />
-                </a>
-              }
+  <div id="searchBarUser">
+    <input
+      id="searchInputUser"
+      type="search"
+      [(ngModel)]="userInput"
+      (keyup.enter)="searchProducts()"
+      (input)="getAutocompleteSuggestions()"
+      placeholder="Search"
+    />
+  </div>
 
-              <div class="card-body p-4">
-                <div class="text-center">
-                  <h5 class="fw-bolder">{{ product.name }}</h5>
-                  {{ product.price | currency: 'EUR' }} <a style="margin: 5px">In Stock:</a>{{ product.inStock }}
-                </div>
+  <ul *ngIf="autocompleteSuggestions.length > 0">
+    <li *ngFor="let suggestion of autocompleteSuggestions" (click)="selectAutocompleteSuggestion(suggestion)">
+      {{ suggestion }}
+    </li>
+  </ul>
+
+  <div class="container px-4 px-lg-5 mt-5">
+    <div
+      class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center"
+      style="background-color: rgba(255, 255, 255, 0.3)"
+    >
+      @for (product of products; track trackId) {
+        <div class="col mb-5">
+          <div class="card h-100 bg-transparent" style="background-color: rgba(255, 255, 255, 0.5)">
+            @if (product.image) {
+              <a (click)="openFile(product.image, product.imageContentType)" style="margin-top: 10px">
+                <img [src]="'data:' + product.imageContentType + ';base64,' + product.image" style="max-height: 60px" alt="product image" />
+              </a>
+            }
+
+            <div class="card-body p-4">
+              <div class="text-center">
+                <h5 class="fw-bolder">{{ product.name }}</h5>
+                {{ product.price | currency: 'EUR' }} <a style="margin: 5px">In Stock:</a>{{ product.inStock }}
               </div>
+            </div>
 
-              <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                <div class="text-center">
-                  <a class="btn btn-outline-dark mt-auto" [routerLink]="['/product', product.id, 'view']">Details</a>
+            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+              <div class="text-center">
+                <a class="btn btn-outline-dark mt-auto" [routerLink]="['/product', product.id, 'view']">Details</a>
 
-                  <button id="addToCartButton" (click)="addToCart(product)" class="btn btn-warning">
-                    <fa-icon icon="shopping-cart"></fa-icon> Add
-                    <!-- addToCart() -->
-                  </button>
+                <button id="addToCartButton" (click)="addToCart(product)" class="btn btn-warning">
+                  <fa-icon icon="shopping-cart"></fa-icon> Add
+                  <!-- addToCart() -->
+                </button>
 
-                  <div [ngSwitch]="selectedQuantity">
-                    <!-- Custom Amount Input Field -->
-                    <ng-container *ngSwitchCase="'Custom'">
-                      <input
-                        [(ngModel)]="customQuantity"
-                        id="customQuantityInput"
-                        type="number"
-                        placeholder="Enter amount:"
-                        style="margin: 5px auto; width: 50%"
-                      />
-                    </ng-container>
+                <div [ngSwitch]="product.quantity">
+                  <!-- Custom Amount Input Field -->
+                  <ng-container *ngSwitchCase="'Custom'">
+                    <input
+                      [(ngModel)]="customQuantity"
+                      id="customQuantityInput"
+                      type="number"
+                      placeholder="Enter amount:"
+                      style="margin: 5px auto; width: 50%; border: none; outline: none"
+                    />
+                  </ng-container>
 
-                    <ng-container *ngSwitchDefault>
-                      <select
-                        [(ngModel)]="selectedQuantity"
-                        class="form-select"
-                        aria-label="Default select example"
-                        style="margin: 5px auto; width: 35%"
-                      >
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="Custom">Custom</option>
-                      </select>
-                    </ng-container>
-                  </div>
+                  <ng-container *ngSwitchDefault>
+                    <select
+                      [(ngModel)]="product.quantity"
+                      class="form-select"
+                      aria-label="Default select example"
+                      style="margin: 5px auto; width: 35%"
+                    >
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                      <option value="Custom">Custom</option>
+                    </select>
+                  </ng-container>
                 </div>
               </div>
             </div>
           </div>
-        }
-      </div>
+        </div>
+      }
     </div>
   </div>
 </div>
