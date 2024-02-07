@@ -189,13 +189,17 @@
       type="search"
       [(ngModel)]="userInput"
       (keyup.enter)="searchProducts()"
-      (input)="getAutocompleteSuggestions()"
+      (keyup)="autocompleteOnInputKeyUp()"
       placeholder="Search"
     />
   </div>
 
   <ul *ngIf="autocompleteSuggestions.length > 0">
-    <li *ngFor="let suggestion of autocompleteSuggestions" (click)="selectAutocompleteSuggestion(suggestion)">
+    <li
+      style="display: flex; justify-content: center; align-items: center"
+      *ngFor="let suggestion of autocompleteSuggestions"
+      (click)="selectAutocompleteSuggestion(suggestion)"
+    >
       {{ suggestion }}
     </li>
   </ul>
@@ -249,7 +253,8 @@
                       aria-label="Default select example"
                       style="margin: 5px auto; width: 35%"
                     >
-                      <option value="1">1</option>
+                      <option value="" selected>1</option>
+                      <option value="1" selected>1</option>
                       <option value="2">2</option>
                       <option value="3">3</option>
                       <option value="4">4</option>

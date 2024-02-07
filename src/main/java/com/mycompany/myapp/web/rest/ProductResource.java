@@ -147,6 +147,11 @@ public class ProductResource {
         return ResponseEntity.ok().body(entityList);
     }
 
+    @GetMapping("/autocomplete")
+    public List<String> autocomplete(@RequestParam String query) {
+        return productService.findSuggestions(query);
+    }
+
     /**
      * {@code GET  /products/count} : count all the products.
      *

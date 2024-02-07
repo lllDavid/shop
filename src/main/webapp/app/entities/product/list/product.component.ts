@@ -80,6 +80,10 @@ export class ProductComponent implements OnInit {
       this.autocompleteSuggestions = [];
     }
   }
+  // autocompleteOnInputKeyUp()
+  autocompleteOnInputKeyUp(): void {
+    this.getAutocompleteSuggestions();
+  }
 
   //selectAutocompleteSuggestion()
   selectAutocompleteSuggestion(suggestion: string): void {
@@ -90,6 +94,7 @@ export class ProductComponent implements OnInit {
 
   //addToCart()
   addToCart(product: IProduct): void {
+    console.log(product.quantity);
     const quantity = product.quantity === 'Custom' ? this.customQuantity || 1 : parseInt(product.quantity, 10) || 1;
     this.cartService.addToCart({ ...product, quantity });
     product.quantity = '1';
@@ -123,6 +128,7 @@ export class ProductComponent implements OnInit {
     this.loadFromBackendWithRouteInformations().subscribe({
       next: (res: EntityArrayResponseType) => {
         this.onResponseSuccess(res);
+        // for loop to set quantity to 1},
       },
     });
   }
