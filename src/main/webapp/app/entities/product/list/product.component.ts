@@ -60,7 +60,6 @@ export class ProductComponent implements OnInit {
     this.load();
   }
 
-  // searchProducts()
   searchProducts(): void {
     this.productService.findProductByName(this.userInput).subscribe({
       next: response => {
@@ -71,7 +70,6 @@ export class ProductComponent implements OnInit {
 
   // getAutocompleteSuggestions()
   getAutocompleteSuggestions(): void {
-    console.log('Aufruf getAutocompleteSuggestions()');
     if (this.userInput.trim() !== '') {
       this.productService.findAutocompleteSuggestions(this.userInput).subscribe(response => {
         this.autocompleteSuggestions = response;
@@ -97,6 +95,10 @@ export class ProductComponent implements OnInit {
     console.log(product.quantity);
     const quantity = product.quantity === 'Custom' ? this.customQuantity || 1 : parseInt(product.quantity, 10) || 1;
     this.cartService.addToCart({ ...product, quantity });
+    product.quantity = '1';
+  }
+
+  onLoadSetQuantity(product: IProduct): void {
     product.quantity = '1';
   }
 
@@ -127,8 +129,14 @@ export class ProductComponent implements OnInit {
   load(): void {
     this.loadFromBackendWithRouteInformations().subscribe({
       next: (res: EntityArrayResponseType) => {
+        // added loop to set quantity value
+        if (res.body != null)
+          for (const value of Object.values(res.body)) {
+            value.quantity = '1';
+            console.log(value);
+          }
         this.onResponseSuccess(res);
-        // for loop to set quantity to 1},
+        console.log(res);
       },
     });
   }
