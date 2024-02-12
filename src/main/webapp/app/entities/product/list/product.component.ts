@@ -60,12 +60,17 @@ export class ProductComponent implements OnInit {
     this.load();
   }
 
+  searchProductsIsActivated = false;
+
   searchProducts(): void {
     this.productService.findProductByName(this.userInput).subscribe({
       next: response => {
         this.products = response.body ? response.body : undefined;
       },
     });
+    this.searchProductsIsActivated = true;
+
+    console.log(this.searchProductsIsActivated);
   }
 
   // getAutocompleteSuggestions()
@@ -133,8 +138,17 @@ export class ProductComponent implements OnInit {
         if (res.body != null)
           for (const value of Object.values(res.body)) {
             value.quantity = '1';
+
+            if (this.searchProductsIsActivated == true) {
+              value.quantity = '0';
+              this.searchProductsIsActivated = false;
+              if (value != null) {
+                console.log(this.searchProductsIsActivated);
+              }
+            }
             console.log(value);
           }
+
         this.onResponseSuccess(res);
         console.log(res);
       },
